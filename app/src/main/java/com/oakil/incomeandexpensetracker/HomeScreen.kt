@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -25,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.oakil.incomeandexpensetracker.ui.theme.Zinc
 
 @Composable
@@ -39,7 +41,6 @@ fun HomeScreen() {
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 })
-
             Box(modifier = Modifier
                 .fillMaxWidth()
                 .padding(
@@ -59,29 +60,43 @@ fun HomeScreen() {
                     contentDescription = null,
                     modifier = Modifier.align(Alignment.CenterEnd)
                 )
-
-            }
-            Spacer(modifier = Modifier.padding(20.dp))
-
-            CardItem(modifier = Modifier.constrainAs(card) {
-                top.linkTo(nameRow.bottom, margin = 24.dp)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
             }
 
-            )
+            // Remove wrapContentHeight and use proper constraints
+            CardItem(modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp) // Add margin to avoid overlap
+                .constrainAs(card) {
+                    top.linkTo(nameRow.bottom, margin = 24.dp) // Proper margin
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                })
 
+            // Ensure enough space for the list below the CardItem
+            TransactionList(modifier = Modifier
+                .fillMaxWidth()
+                .constrainAs(list) {
+                    top.linkTo(card.bottom, margin = 16.dp)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    bottom.linkTo(parent.bottom)
+                    height = Dimension.fillToConstraints
+                })
         }
-
     }
 }
 
 
 @Composable
+fun TransactionItem(title: String, amount: String, icon:Int, date : String) {
+    
+}
+
+@Composable
 fun CardItem(modifier: Modifier) {
     Column(
         modifier = Modifier
-            .padding(top = 80.dp)
+            //.padding(top = 80.dp)
             .fillMaxWidth()
             .padding(16.dp)
             .height(200.dp)
@@ -128,11 +143,32 @@ fun CardItem(modifier: Modifier) {
                 amount = "$ 5,099",
                 image = R.drawable.ic_expense
             )
-            
+
         }
+
     }
 
 }
+
+
+
+@Composable
+fun TransactionList(modifier: Modifier) {
+    Column(modifier = modifier
+        .padding(horizontal = 16.dp)
+        .padding(top = 280.dp)) {
+        Box(modifier = Modifier.fillMaxWidth()) {
+            Text(text = "Recent Transactions", fontSize = 20.sp)
+            Text(
+                text = "See All",
+                fontSize = 16.sp,
+                color = Color.Black,
+                modifier = Modifier.align(Alignment.CenterEnd)
+            )
+        }
+    }
+}
+
 
 @Composable
 fun CardRowItem(modifier: Modifier, tile: String, amount: String, image: Int) {
@@ -141,13 +177,11 @@ fun CardRowItem(modifier: Modifier, tile: String, amount: String, image: Int) {
         Row {
             Image(painter = painterResource(id = image), contentDescription = null)
             Spacer(modifier = Modifier.size(8.dp))
-            Text(text = tile, fontSize = 16.sp, color = Color.White)
+            Text(text = tile, fontSize = 18.sp, color = Color.White)
         }
 
         Text(text = amount, fontSize = 20.sp, color = Color.White)
     }
-
-
 }
 
 @Preview(showBackground = true)
