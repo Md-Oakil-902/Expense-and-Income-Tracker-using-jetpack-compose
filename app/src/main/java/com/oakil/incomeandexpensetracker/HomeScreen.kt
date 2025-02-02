@@ -133,7 +133,7 @@ fun CardItem(modifier: Modifier) {
             )
             CardRowItem(
                 modifier = Modifier.align(Alignment.CenterEnd),
-                title = "Income",
+                title = "Expense",
                 "8000",
                 image = R.drawable.ic_expense
             )
