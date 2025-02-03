@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.oakil.incomeandexpensetracker.ui.theme.Zinc
+import com.oakil.incomeandexpensetracker.widget.ExpenseTextView
 
 
 @Composable
@@ -53,8 +54,8 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                     end.linkTo(parent.end)
                 }) {
                 Column() {
-                    Text(text = "Good Afternoon", fontSize = 16.sp, color = Color.White)
-                    Text(text = "Oakil", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    ExpenseTextView(text = "Good Afternoon", fontSize = 16.sp, color = Color.White)
+                    ExpenseTextView(text = "Oakil", fontSize = 20.sp, fontWeight = FontWeight.Bold)
                 }
                 Image(
                     painter = painterResource(id = R.drawable.ic_notification),
@@ -106,8 +107,8 @@ fun CardItem(modifier: Modifier) {
                 .padding(top = 10.dp)
         ) {
             Column {
-                Text("Total Balance", fontSize = 16.sp, color = Color.White)
-                Text("$ 5000", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                ExpenseTextView("Total Balance", fontSize = 16.sp, color = Color.White)
+                ExpenseTextView("$ 5000", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White)
             }
 
             Image(
@@ -149,8 +150,8 @@ fun CardItem(modifier: Modifier) {
 fun TransactionList(modifier: Modifier) {
     Column(modifier = modifier.padding(top = 360.dp, start = 16.dp, end = 16.dp)) {
         Box(modifier = Modifier.fillMaxWidth()) {
-            Text(text = "Recent Transaction", fontSize = 20.sp)
-            Text(
+            ExpenseTextView(text = "Recent Transaction", fontSize = 20.sp)
+            ExpenseTextView(
                 text = "See all", fontSize = 16.sp, color = Color.Black, modifier = Modifier.align(
                     Alignment.CenterEnd
                 )
@@ -191,15 +192,15 @@ fun TransactionItem(  title: String, amount: String, icon: Int, date: String, co
         Row {
             Image(painter = painterResource(id = icon), contentDescription = null, modifier = Modifier.size(50.dp))
             Column(modifier = Modifier.padding(start = 10.dp).align(Alignment.CenterVertically)) {
-                Text(text = title, fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                Text(text = date, fontSize = 12.sp)
+                ExpenseTextView(text = title, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
+                ExpenseTextView(text = date, fontSize = 12.sp)
             }
         }
-        Text(
+        ExpenseTextView(
             text = amount,
             fontSize = 20.sp,
             modifier = Modifier.align(Alignment.CenterEnd),
-            color = color
+            color = color, fontWeight = FontWeight.Medium
         )
     }
 
@@ -211,10 +212,10 @@ fun CardRowItem(modifier: Modifier, title: String, amount: String, image: Int) {
     Column(modifier = modifier) {
         Row {
             Image(painter = painterResource(image), contentDescription = null)
-            Text(text = title, fontSize = 18.sp, color = Color.White)
+            ExpenseTextView(text = title, fontSize = 18.sp, color = Color.White)
 
         }
-        Text(text = amount, fontSize = 18.sp, color = Color.White)
+        ExpenseTextView(text = amount, fontSize = 18.sp, color = Color.White)
     }
 
 }
