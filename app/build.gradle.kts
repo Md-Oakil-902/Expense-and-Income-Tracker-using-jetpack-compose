@@ -1,7 +1,11 @@
+import org.jetbrains.kotlin.gradle.model.Kapt
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    kotlin("kapt")
+
 }
 
 android {
@@ -57,4 +61,13 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation("androidx.constraintlayout:constraintlayout-compose:1.1.0")
+
+
+    val room_version = "2.6.1"
+    implementation("androidx.room:room-runtime: $room_version")
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+
+
 }
