@@ -14,7 +14,6 @@ interface ExpenseDao {
     @Query("SELECT * FROM expense_table")
     fun getAllExpense(): Flow<List<ExpenseEntity>>
 
-
     @Insert
     suspend fun insertExpense(expenseEntity: ExpenseEntity)
 
@@ -25,3 +24,4 @@ interface ExpenseDao {
     suspend fun updateExpense(expenseEntity: ExpenseEntity)
 
 }
+

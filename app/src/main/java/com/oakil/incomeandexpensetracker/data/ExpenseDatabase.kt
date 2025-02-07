@@ -24,15 +24,17 @@ abstract class ExpenseDatabase : RoomDatabase() {
             return Room.databaseBuilder(context, ExpenseDatabase::class.java, DATABASE_NAME).addCallback(object : RoomDatabase.Callback(){
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     super.onCreate(db)
+                    initBasicData(context)
                 }
                 fun initBasicData(context: Context){
                     CoroutineScope(Dispatchers.IO).launch {
                         val dao = getDatabase(context).expenseDao()
 
-                        dao.insertExpense(ExpenseEntity(1, "Salary", 50000.32,System.currentTimeMillis(), "Salary", "Income" ))
-                        dao.insertExpense(ExpenseEntity(2, "Paypal", 50000.32,System.currentTimeMillis(), "Paypal", "Income" ))
-                        dao.insertExpense(ExpenseEntity(3, "Netflix", 50000.32,System.currentTimeMillis(), "Netflix", "Expense" ))
+                        dao.insertExpense(ExpenseEntity(1, "Salary", 500.32,System.currentTimeMillis(), "Salary", "Income" ))
+                        dao.insertExpense(ExpenseEntity(2, "Paypal", 506780.32,System.currentTimeMillis(), "Paypal", "Income" ))
+                        dao.insertExpense(ExpenseEntity(3, "Netflix", 430000.32,System.currentTimeMillis(), "Netflix", "Expense" ))
                         dao.insertExpense(ExpenseEntity(4, "Starbucks", 50000.32,System.currentTimeMillis(), "Starbucks", "Expense" ))
+
                     }
                 }
             }).build()
