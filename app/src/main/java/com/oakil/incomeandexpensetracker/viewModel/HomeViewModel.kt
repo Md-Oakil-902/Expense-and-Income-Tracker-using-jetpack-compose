@@ -43,8 +43,7 @@ class HomeViewModel(dao:ExpenseDao): ViewModel() {
                 total += it.amount
             }
         }
-        return "$ ${total}"
-
+        return "$ ${total}" 
     }
 
     fun getItemIcon(item:ExpenseEntity) : Int{
@@ -59,7 +58,6 @@ class HomeViewModel(dao:ExpenseDao): ViewModel() {
         }
         return R.drawable.ic_paypal
     }
-
 
 }
 

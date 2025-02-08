@@ -18,6 +18,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -92,8 +94,10 @@ fun AddExpense(modifier: Modifier = Modifier) {
 
 @Composable
 fun DataForm(modifier: Modifier) {
+    val name = remember { mutableStateOf("") }
+    val amount = remember { mutableStateOf("") }
+
     Column(
-        
         modifier = Modifier
             .padding(start = 16.dp, end = 16.dp, top = 170.dp)
             .fillMaxWidth()
@@ -105,30 +109,21 @@ fun DataForm(modifier: Modifier) {
 
 
     ) {
-        ExpenseTextView(text = "Type", fontSize = 14.sp, color = Color.Gray)
-        Spacer(modifier = Modifier.size(4.dp))
-        OutlinedTextField(value = "", onValueChange = {}, modifier = Modifier.fillMaxWidth())
-        Spacer(modifier = Modifier.size(16.dp))
 
-        ExpenseTextView(text = "Name", fontSize = 14.sp, color = Color.Gray)
-        Spacer(modifier = Modifier.size(4.dp))
-        OutlinedTextField(value = "", onValueChange = {}, modifier = Modifier.fillMaxWidth())
-        Spacer(modifier = Modifier.size(16.dp))
+        ExpenseTextView(text = "Name", fontSize = 14.sp)
+        Spacer(modifier = Modifier.size(8.dp))
+        OutlinedTextField(value = name.value, onValueChange = { name.value = it }, modifier = Modifier.fillMaxWidth())
 
-        ExpenseTextView(text = "Category", fontSize = 14.sp, color = Color.Gray)
-        Spacer(modifier = Modifier.size(4.dp))
-        OutlinedTextField(value = "", onValueChange = {}, modifier = Modifier.fillMaxWidth())
-        Spacer(modifier = Modifier.size(16.dp))
+        ExpenseTextView(text = "amount", fontSize = 14.sp)
+        Spacer(modifier = Modifier.size(8.dp))
+        OutlinedTextField(value = amount.value, onValueChange = { amount.value = it }, modifier = Modifier.fillMaxWidth())
 
-        ExpenseTextView(text = "Amount", fontSize = 14.sp, color = Color.Gray)
-        Spacer(modifier = Modifier.size(4.dp))
-        OutlinedTextField(value = "", onValueChange = {}, modifier = Modifier.fillMaxWidth())
-        Spacer(modifier = Modifier.size(16.dp))
+        //date picker dialog
 
-        ExpenseTextView(text = "Date", fontSize = 14.sp, color = Color.Gray)
-        Spacer(modifier = Modifier.size(4.dp))
-        OutlinedTextField(value = "", onValueChange = {}, modifier = Modifier.fillMaxWidth())
-        Spacer(modifier = Modifier.size(16.dp))
+        //drop down category
+
+
+        //type
 
         Button(
             onClick = {}, modifier = Modifier
