@@ -1,7 +1,12 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.oakil.incomeandexpensetracker
 
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,9 +19,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -96,6 +106,8 @@ fun AddExpense(modifier: Modifier = Modifier) {
 fun DataForm(modifier: Modifier) {
     val name = remember { mutableStateOf("") }
     val amount = remember { mutableStateOf("") }
+    val date = remember { mutableStateOf(0L) }
+    val dateDialogVisibility = remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -106,19 +118,34 @@ fun DataForm(modifier: Modifier) {
             .background(Color.White)
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
-
-
     ) {
 
         ExpenseTextView(text = "Name", fontSize = 14.sp)
         Spacer(modifier = Modifier.size(8.dp))
-        OutlinedTextField(value = name.value, onValueChange = { name.value = it }, modifier = Modifier.fillMaxWidth())
+        OutlinedTextField(
+            value = name.value,
+            onValueChange = { name.value = it },
+            modifier = Modifier.fillMaxWidth()
+        )
 
         ExpenseTextView(text = "amount", fontSize = 14.sp)
         Spacer(modifier = Modifier.size(8.dp))
-        OutlinedTextField(value = amount.value, onValueChange = { amount.value = it }, modifier = Modifier.fillMaxWidth())
+        OutlinedTextField(
+            value = amount.value,
+            onValueChange = { amount.value = it },
+            modifier = Modifier.fillMaxWidth()
+        )
 
         //date picker dialog
+        ExpenseTextView(text = "Date", fontSize = 14.sp)
+        Spacer(modifier = Modifier.size(8.dp))
+        OutlinedTextField(
+            value = date.value.toString(),
+            onValueChange = { },
+            modifier = Modifier.fillMaxWidth().clickable { dateDialogVisibility.value = true },
+            enabled = false
+        )
+
 
         //drop down category
 
@@ -134,9 +161,45 @@ fun DataForm(modifier: Modifier) {
         }
 
     }
+    if (dateDialogVisibility.value) {
+        ExpenseDatePickerDialog(onDateSelected = {
+            date.value = it
+            dateDialogVisibility.value = false
+        }, onDismiss = {
+            dateDialogVisibility.value = false
+        })
+
+    }
+
 
 }
 
+@Composable
+fun ExpenseDatePickerDialog(
+    onDateSelected: (date: Long) -> Unit,
+    onDismiss: () -> Unit
+) {
+    val datePickerState = rememberDatePickerState()
+    val selectedDate = datePickerState.selectedDateMillis ?: 0L
+    DatePickerDialog(
+        onDismissRequest = { onDismiss() },
+        confirmButton = {
+            TextButton(onClick = { onDateSelected(selectedDate) }) {
+                Text(text = "Confirm")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = { onDateSelected(selectedDate) }) {
+                Text(text = "Cancel")
+            }
+
+        }
+
+    ) {
+        DatePicker(state = datePickerState)
+    }
+
+}
 
 @Preview(showBackground = true)
 @Composable
