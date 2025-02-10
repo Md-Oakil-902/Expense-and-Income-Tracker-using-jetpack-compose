@@ -136,16 +136,16 @@ fun DataForm(modifier: Modifier) {
             modifier = Modifier.fillMaxWidth()
         )
 
+
         //date picker dialog
         ExpenseTextView(text = "Date", fontSize = 14.sp)
         Spacer(modifier = Modifier.size(8.dp))
         OutlinedTextField(
-            value = date.value.toString(),
+            value = if(date.value == 0L) "" else Utils.formatDateToHumanReadableForm(date.value),
             onValueChange = { },
             modifier = Modifier.fillMaxWidth().clickable { dateDialogVisibility.value = true },
             enabled = false
         )
-
 
         //drop down category
 
