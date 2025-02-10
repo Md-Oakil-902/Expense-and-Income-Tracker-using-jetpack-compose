@@ -21,11 +21,16 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuBoxScope
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -103,11 +108,52 @@ fun AddExpense(modifier: Modifier = Modifier) {
 }
 
 @Composable
+fun ExpenseDropDown(listOfItem: List<String>, onItemSelected: (item: String) -> Unit) {
+    val expanded = remember {
+        mutableStateOf(false)
+
+    }
+    val selectedItem = remember {
+        mutableStateOf<String>(listOfItem[0])
+    }
+
+    ExposedDropdownMenuBox(
+        expanded = expanded.value,
+        onExpandedChange = { expanded.value = it }) {
+
+        TextField(
+            value = selectedItem.value,
+            onValueChange = {},
+            modifier = Modifier
+                .fillMaxWidth()
+                .menuAnchor(),
+            readOnly = true,
+            trailingIcon = {
+                ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded.value)
+            })
+
+        ExposedDropdownMenu(expanded = expanded.value, onDismissRequest = {}) {
+            listOfItem.forEach {
+                DropdownMenuItem(text = { Text(text = it) }, onClick = {
+                    selectedItem.value = it
+                    onItemSelected(selectedItem.value)
+                    expanded.value = false
+                })
+            }
+        }
+    }
+
+}
+
+
+@Composable
 fun DataForm(modifier: Modifier) {
     val name = remember { mutableStateOf("") }
     val amount = remember { mutableStateOf("") }
     val date = remember { mutableStateOf(0L) }
     val dateDialogVisibility = remember { mutableStateOf(false) }
+    val category = remember { mutableStateOf("") }
+    val type = remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -141,13 +187,26 @@ fun DataForm(modifier: Modifier) {
         ExpenseTextView(text = "Date", fontSize = 14.sp)
         Spacer(modifier = Modifier.size(8.dp))
         OutlinedTextField(
-            value = if(date.value == 0L) "" else Utils.formatDateToHumanReadableForm(date.value),
+            value = if (date.value == 0L) "" else Utils.formatDateToHumanReadableForm(date.value),
             onValueChange = { },
-            modifier = Modifier.fillMaxWidth().clickable { dateDialogVisibility.value = true },
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { dateDialogVisibility.value = true },
             enabled = false
         )
 
         //drop down category
+        ExpenseTextView(text = "Category", fontSize = 14.sp)
+        Spacer(modifier = Modifier.size(8.dp))
+        ExpenseDropDown(
+            listOf("Netflix", "Paypall", "Starbucks", "Salary", "Upwork"),
+            onItemSelected = { category.value = it })
+
+        ExpenseTextView(text = "Type", fontSize = 14.sp)
+        Spacer(modifier = Modifier.size(8.dp))
+        ExpenseDropDown(
+            listOf("Income", "Expense"),
+            onItemSelected = { type.value = it })
 
 
         //type
