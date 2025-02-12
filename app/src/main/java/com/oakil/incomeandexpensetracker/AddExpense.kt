@@ -2,8 +2,6 @@
 
 package com.oakil.incomeandexpensetracker
 
-import android.app.DatePickerDialog
-import android.app.DatePickerDialog.OnDateSetListener
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -12,7 +10,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -24,7 +21,6 @@ import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuBoxScope
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -34,27 +30,37 @@ import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.oakil.incomeandexpensetracker.data.Model.ExpenseEntity
+import com.oakil.incomeandexpensetracker.viewModel.AddExpenseViewModel
+import com.oakil.incomeandexpensetracker.viewModel.AddExpenseViewModelFactory
 import com.oakil.incomeandexpensetracker.widget.ExpenseTextView
+import kotlinx.coroutines.launch
 
 @Composable
 fun AddExpense(modifier: Modifier = Modifier) {
 
+    val viewModel =
+        AddExpenseViewModelFactory(LocalContext.current).create(AddExpenseViewModel::class.java)
+
+    val coroutineScope = rememberCoroutineScope()
+
     Surface() {
         ConstraintLayout(modifier = Modifier.fillMaxSize()) {
             val (nameRow, list, card, topBarImage) = createRefs()
-            Image(painter = painterResource(R.drawable.ic_topbar),
+            Image(painter = painterResource(R.drawable.ic_income),
                 contentDescription = null,
                 modifier = Modifier.constrainAs(topBarImage) {
                     top.linkTo(parent.top)
@@ -100,6 +106,12 @@ fun AddExpense(modifier: Modifier = Modifier) {
                 top.linkTo(nameRow.bottom)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
+            }, onAddExpenseClick = {
+                coroutineScope.launch {
+                    viewModel.addExpense(it)
+
+                }
+
             })
 
         }
@@ -107,9 +119,8 @@ fun AddExpense(modifier: Modifier = Modifier) {
 }
 
 
-
 @Composable
-fun DataForm(modifier: Modifier) {
+fun DataForm(modifier: Modifier, onAddExpenseClick: (model: ExpenseEntity)-> Unit) {
     val name = remember { mutableStateOf("") }
     val amount = remember { mutableStateOf("") }
     val date = remember { mutableStateOf(0L) }
@@ -171,17 +182,26 @@ fun DataForm(modifier: Modifier) {
             onItemSelected = { type.value = it })
 
 
-
         //type
 
         Button(
-            onClick = {}, modifier = Modifier
+            onClick = {
+                val model = ExpenseEntity(
+                    null,
+                    name.value,
+                    amount.value.toDoubleOrNull() ?: 0.0,
+                    Utils.formatDateToHumanReadableForm(date.value),
+                    category.value,
+                    type.value
+                )
+
+                onAddExpenseClick(model)
+            }, modifier = Modifier
                 .clip(RoundedCornerShape(2.dp))
                 .fillMaxWidth()
         ) {
             ExpenseTextView(text = "Add Expense", fontSize = 14.sp, color = Color.White)
         }
-
     }
     if (dateDialogVisibility.value) {
         ExpenseDatePickerDialog(onDateSelected = {
@@ -192,7 +212,6 @@ fun DataForm(modifier: Modifier) {
         })
 
     }
-
 }
 
 
@@ -232,7 +251,6 @@ fun ExpenseDropDown(listOfItem: List<String>, onItemSelected: (item: String) -> 
     }
 
 }
-
 
 
 @Composable
