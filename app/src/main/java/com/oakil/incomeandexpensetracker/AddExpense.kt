@@ -43,14 +43,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.oakil.incomeandexpensetracker.data.Model.ExpenseEntity
 import com.oakil.incomeandexpensetracker.viewModel.AddExpenseViewModel
 import com.oakil.incomeandexpensetracker.viewModel.AddExpenseViewModelFactory
 import com.oakil.incomeandexpensetracker.widget.ExpenseTextView
 import kotlinx.coroutines.launch
 
+
 @Composable
-fun AddExpense(modifier: Modifier = Modifier) {
+fun AddExpense(navController: NavController) {
 
     val viewModel =
         AddExpenseViewModelFactory(LocalContext.current).create(AddExpenseViewModel::class.java)
@@ -108,7 +111,10 @@ fun AddExpense(modifier: Modifier = Modifier) {
                 end.linkTo(parent.end)
             }, onAddExpenseClick = {
                 coroutineScope.launch {
-                    viewModel.addExpense(it)
+                    if(viewModel.addExpense(it)){
+                        navController.popBackStack()
+
+                    }
 
                 }
 
@@ -284,6 +290,6 @@ fun ExpenseDatePickerDialog(
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-    AddExpense()
+    AddExpense(navController = rememberNavController())
 
 }
