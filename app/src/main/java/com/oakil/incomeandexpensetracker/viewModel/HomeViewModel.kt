@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.oakil.incomeandexpensetracker.R
+import com.oakil.incomeandexpensetracker.Utils
 import com.oakil.incomeandexpensetracker.data.ExpenseDatabase
 import com.oakil.incomeandexpensetracker.data.Model.ExpenseEntity
 import com.oakil.incomeandexpensetracker.data.dao.ExpenseDao
@@ -13,16 +14,16 @@ class HomeViewModel(dao:ExpenseDao): ViewModel() {
     val expense = dao.getAllExpense()
 
     fun getBalance(list: List<ExpenseEntity>) : String{
-        var total  = 0.0
+        var balance  = 0.0
         list.forEach{
             if(it.type == "Income")
             {
-                total += it.amount
+                balance += it.amount
             }else{
-                total -= it.amount
+                balance -= it.amount
             }
         }
-        return "$ ${total}"
+        return "$ ${Utils.formatDecimalValue(balance)}"
     }
 
     fun getTotalExpense(list: List<ExpenseEntity>): String{
@@ -32,18 +33,18 @@ class HomeViewModel(dao:ExpenseDao): ViewModel() {
                 total += it.amount
             }
         }
-        return "$ ${total}"
+        return "$ ${Utils.formatDecimalValue(total)}"
 
     }
 
     fun getTotalIncome(list: List<ExpenseEntity>): String{
-        var total = 0.0
+        var totalIncome = 0.0
         list.forEach{
             if(it.type == "Income"){
-                total += it.amount
+                totalIncome += it.amount
             }
         }
-        return "$ ${total}" 
+        return "$ ${Utils.formatDecimalValue(totalIncome)}"
     }
 
     fun getItemIcon(item:ExpenseEntity) : Int{

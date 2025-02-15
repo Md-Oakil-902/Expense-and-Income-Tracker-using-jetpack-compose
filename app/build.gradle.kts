@@ -71,6 +71,8 @@ dependencies {
 
     implementation("androidx.navigation:navigation-compose:2.8.6")
 
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
 
 
 

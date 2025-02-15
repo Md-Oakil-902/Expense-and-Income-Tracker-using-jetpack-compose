@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.oakil.incomeandexpensetracker
+package com.oakil.incomeandexpensetracker.feature.add_expense
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,6 +23,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -45,6 +46,8 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.oakil.incomeandexpensetracker.R
+import com.oakil.incomeandexpensetracker.Utils
 import com.oakil.incomeandexpensetracker.data.Model.ExpenseEntity
 import com.oakil.incomeandexpensetracker.viewModel.AddExpenseViewModel
 import com.oakil.incomeandexpensetracker.viewModel.AddExpenseViewModelFactory
@@ -111,7 +114,7 @@ fun AddExpense(navController: NavController) {
                 end.linkTo(parent.end)
             }, onAddExpenseClick = {
                 coroutineScope.launch {
-                    if(viewModel.addExpense(it)){
+                    if (viewModel.addExpense(it)) {
                         navController.popBackStack()
 
                     }
@@ -126,7 +129,7 @@ fun AddExpense(navController: NavController) {
 
 
 @Composable
-fun DataForm(modifier: Modifier, onAddExpenseClick: (model: ExpenseEntity)-> Unit) {
+fun DataForm(modifier: Modifier, onAddExpenseClick: (model: ExpenseEntity) -> Unit) {
     val name = remember { mutableStateOf("") }
     val amount = remember { mutableStateOf("") }
     val date = remember { mutableStateOf(0L) }
@@ -171,7 +174,10 @@ fun DataForm(modifier: Modifier, onAddExpenseClick: (model: ExpenseEntity)-> Uni
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable { dateDialogVisibility.value = true },
-            enabled = false
+            enabled = false, colors = OutlinedTextFieldDefaults.colors(
+                disabledBorderColor = Color.Black,
+                disabledTextColor = Color.Black
+            )
         )
 
         //drop down category

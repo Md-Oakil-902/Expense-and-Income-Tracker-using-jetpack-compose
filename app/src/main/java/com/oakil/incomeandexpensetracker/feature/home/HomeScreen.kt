@@ -1,4 +1,4 @@
-package com.oakil.incomeandexpensetracker
+package com.oakil.incomeandexpensetracker.feature.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -32,6 +32,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.oakil.incomeandexpensetracker.R
 import com.oakil.incomeandexpensetracker.data.Model.ExpenseEntity
 import com.oakil.incomeandexpensetracker.ui.theme.Zinc
 import com.oakil.incomeandexpensetracker.viewModel.HomeViewModel
