@@ -7,3 +7,8 @@ import androidx.compose.ui.Modifier
 fun StatesScreen() {
     
 }
+
+@Composable
+fun LineChart() {
+    
+}

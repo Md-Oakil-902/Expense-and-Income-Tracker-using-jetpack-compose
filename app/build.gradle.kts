@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.model.Kapt
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -61,19 +59,18 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation("androidx.constraintlayout:constraintlayout-compose:1.1.0")
+    implementation(libs.androidx.constraintlayout.compose)
 
-    val room_version = "2.6.1"
-    implementation("androidx.room:room-runtime: $room_version")
-    annotationProcessor("androidx.room:room-compiler:2.6.1")
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
     kapt("androidx.room:room-compiler:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
+    implementation(libs.androidx.room.ktx)
 
-    implementation("androidx.navigation:navigation-compose:2.8.6")
+    implementation(libs.androidx.navigation.compose)
+
 
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
-
-
+    //implementation(libs.anychart.android)
 
 }
