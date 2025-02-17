@@ -7,10 +7,9 @@ import com.oakil.incomeandexpensetracker.data.ExpenseDatabase
 import com.oakil.incomeandexpensetracker.data.dao.ExpenseDao
 
 class StatsViewModel(val dao: ExpenseDao): ViewModel() {
-    val expense = dao.getAllExpense()
+
+
 }
-
-
 
 class StatsViewModelFactory(private val context : Context) : ViewModelProvider.Factory{
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
