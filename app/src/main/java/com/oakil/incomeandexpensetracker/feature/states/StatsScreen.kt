@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,6 +21,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.oakil.incomeandexpensetracker.R
+import com.oakil.incomeandexpensetracker.viewModel.StatsViewModel
+import com.oakil.incomeandexpensetracker.viewModel.StatsViewModelFactory
 import com.oakil.incomeandexpensetracker.widget.ExpenseTextView
 
 @Composable
@@ -56,6 +59,9 @@ fun StatesScreen(navController: NavController) {
         }
 
     }) {
+        val viewModel = StatsViewModelFactory(navController.context).create(StatsViewModel::class.java)
+        val dataState = viewModel.entries.collectAsState(emptyList())
+
         Column(modifier = Modifier.padding(it)) {
 
         }
