@@ -14,11 +14,9 @@ class StatsViewModel(val dao: ExpenseDao): ViewModel() {
     fun getEntriesForChart(entries: List<ExpenseEntity>): List<Entry>{
         return entries
     }
-
-
-
-
 }
+
+
 
 class StatsViewModelFactory(private val context : Context) : ViewModelProvider.Factory{
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
