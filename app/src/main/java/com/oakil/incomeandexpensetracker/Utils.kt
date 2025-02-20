@@ -1,6 +1,7 @@
 package com.oakil.incomeandexpensetracker
 
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 object Utils{
@@ -12,4 +13,8 @@ object Utils{
     fun formatDecimalValue(d:Double) : String{
         return String.format("%.2f", d)
     }
+
+    fun getMilliFromDate(dateFormat: String?) : Long{
+        var date = Date()vval
+    }ddddddd
 }

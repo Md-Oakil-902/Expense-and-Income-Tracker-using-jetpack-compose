@@ -57,7 +57,7 @@ fun StatesScreen(navController: NavController) {
             )
 
         }
-
+hhhh
     }) {
         val viewModel = StatsViewModelFactory(navController.context).create(StatsViewModel::class.java)
         val dataState = viewModel.entries.collectAsState(emptyList())
@@ -71,7 +71,6 @@ fun StatesScreen(navController: NavController) {
 }
 
 
-@Preview
 @Composable
 fun LineChart() {
     StatesScreen(navController = rememberNavController())

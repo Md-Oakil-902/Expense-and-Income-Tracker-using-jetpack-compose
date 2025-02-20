@@ -12,6 +12,10 @@ class StatsViewModel(val dao: ExpenseDao): ViewModel() {
     val entries = dao.getAllExpenseByDate()
 
     fun getEntriesForChart(entries: List<ExpenseEntity>): List<Entry>{
+        val list = mutableListOf<Entry>()
+        for (entry in entries){
+            val formattedDate = Utils.getmill
+        }
         return entries
     }
 }
