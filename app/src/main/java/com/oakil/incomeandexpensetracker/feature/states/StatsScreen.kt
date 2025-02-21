@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.github.mikephil.charting.data.Entry
 import com.oakil.incomeandexpensetracker.R
 import com.oakil.incomeandexpensetracker.viewModel.StatsViewModel
 import com.oakil.incomeandexpensetracker.viewModel.StatsViewModelFactory
@@ -57,7 +58,7 @@ fun StatesScreen(navController: NavController) {
             )
 
         }
-hhhh
+
     }) {
         val viewModel = StatsViewModelFactory(navController.context).create(StatsViewModel::class.java)
         val dataState = viewModel.entries.collectAsState(emptyList())
@@ -72,6 +73,8 @@ hhhh
 
 
 @Composable
-fun LineChart() {
-    StatesScreen(navController = rememberNavController())
+fun LineChart(entries: List<Entry>) {
+
+
+
 }
