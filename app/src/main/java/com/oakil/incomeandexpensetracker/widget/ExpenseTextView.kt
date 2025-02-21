@@ -52,7 +52,7 @@ fun ExpenseTextView(
         softWrap,
         maxLines,
         minLines,
-        onTextLayout,
+        onTextLayout ?: { /* No-op default function */ },
         style
     )
 

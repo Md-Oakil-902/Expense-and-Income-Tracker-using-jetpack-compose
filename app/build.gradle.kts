@@ -43,8 +43,9 @@ android {
 }
 
 
-dependencies {
 
+
+dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -56,14 +57,6 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-//    implementation("androidx.compose.ui:ui")
-//    implementation("androidx.compose.ui:ui-graphics")
-//    implementation("androidx.compose.ui:ui-tooling-preview")
-//    implementation(libs.androidx.constraintlayout)
-//    debugImplementation("androidx.compose.ui:ui-tooling")
-//    debugImplementation("androidx.compose.ui:ui-test-manifest")
-
-
     implementation(libs.androidx.material3)
     implementation(libs.androidx.recyclerview)
     testImplementation(libs.junit)
@@ -74,17 +67,18 @@ dependencies {
 
 
     implementation(libs.androidx.room.runtime)
-    annotationProcessor(libs.androidx.room.compiler)
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
 
     implementation(libs.androidx.navigation.compose)
 
-
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
-    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+    implementation("androidx.constraintlayout:constraintlayout-compose-android:1.1.0")
 
-    //implementation(libs.anychart.android)
+
+    implementation(libs.kotlinx.coroutines.android)
+
+
 
 }
 
